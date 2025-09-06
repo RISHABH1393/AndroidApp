@@ -3,8 +3,7 @@ workflows:
     name: Build KidsDragDropMath
     max_build_duration: 30
     environment:
-      android:
-        sdk: 33
+      sdk: 33
       java: 11
     scripts:
       - name: Build Debug APK
@@ -14,7 +13,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - mailtomerishabh1393@gmail.com
+          - your-email@example.com   # optional: replace with your email
         notify:
           success: true
           failure: true
