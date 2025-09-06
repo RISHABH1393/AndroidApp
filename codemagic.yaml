@@ -5,7 +5,10 @@ workflows:
     environment:
       java: 11
     scripts:
+      - name: Set up Gradle wrapper
+        script: |
+          gradle wrapper --gradle-version 7.6.1
       - name: Build Debug APK
-        script: gradle clean assembleDebug
+        script: ./gradlew clean assembleDebug
     artifacts:
       - app/build/outputs/apk/debug/*.apk
