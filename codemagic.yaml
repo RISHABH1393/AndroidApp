@@ -7,14 +7,9 @@ workflows:
       android:
         image: latest
     scripts:
-      - name: Set up Gradle wrapper
-        script: |
-          gradle wrapper --gradle-version 7.6.1
-      - name: Sync dependencies
-        script: ./gradlew dependencies
-      - name: Compile only
-        script: ./gradlew compileDebugSources
-      - name: Assemble Debug APK
-        script: ./gradlew assembleDebug
+      - name: Generate Gradle wrapper
+        script: gradle wrapper --gradle-version 7.6.1
+      - name: Build Debug APK
+        script: ./gradlew assembleDebug --stacktrace --no-daemon
     artifacts:
       - app/build/outputs/apk/debug/*.apk
