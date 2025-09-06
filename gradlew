@@ -1,7 +1,10 @@
-#!/usr/bin/env sh
+CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
-DIRNAME=$(dirname "$0")
-APP_BASE_NAME=$(basename "$0")
-APP_HOME=$(cd "$DIRNAME" && pwd)
+# Check Java
+if [ -n "$JAVA_HOME" ] ; then
+    JAVA="$JAVA_HOME/bin/java"
+else
+    JAVA="java"
+fi
 
-exec "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" "$@"
+exec "$JAVA" -Xmx64m -Xms64m -cp "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
