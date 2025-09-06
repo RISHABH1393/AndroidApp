@@ -5,11 +5,11 @@ workflows:
     environment:
       java: 11
     scripts:
-      - name: Set Gradle permissions
+      - name: Generate Gradle wrapper
+        script: gradle wrapper
+      - name: Fix Gradle wrapper permissions
         script: chmod +x ./gradlew
-      - name: Ensure wrapper permissions
-        script: chmod +x ./gradle/wrapper/gradle-wrapper.jar
       - name: Build Debug APK
-        script: ./gradlew clean assembleDebug --stacktrace --no-daemon
+        script: ./gradlew assembleDebug --stacktrace --no-daemon
     artifacts:
       - app/build/outputs/apk/debug/*.apk
