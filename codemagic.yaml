@@ -7,6 +7,8 @@ workflows:
     scripts:
       - name: Set Gradle permissions
         script: chmod +x ./gradlew
+      - name: Ensure wrapper permissions
+        script: chmod +x ./gradle/wrapper/gradle-wrapper.jar
       - name: Build Debug APK
         script: ./gradlew clean assembleDebug --stacktrace --no-daemon
     artifacts:
