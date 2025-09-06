@@ -5,6 +5,8 @@ workflows:
     environment:
       java: 11
     scripts:
+      - name: Generate Gradle wrapper
+        script: gradle wrapper --gradle-version 7.6.1
       - name: Fix Gradle wrapper permissions
         script: chmod +x ./gradlew
       - name: Build Debug APK
