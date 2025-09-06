@@ -1,14 +1,11 @@
 workflows:
-  generate-wrapper:
-    name: Generate Gradle Wrapper
-    max_build_duration: 10
+  build-android-app:
+    name: Build KidsDragDropMath
+    max_build_duration: 30
     environment:
       java: 11
     scripts:
-      - name: Generate wrapper
-        script: gradle wrapper --gradle-version 7.6.1
+      - name: Build Debug APK
+        script: ./gradlew assembleDebug --stacktrace --no-daemon
     artifacts:
-      - gradlew
-      - gradlew.bat
-      - gradle/wrapper/gradle-wrapper.jar
-      - gradle/wrapper/gradle-wrapper.properties
+      - app/build/outputs/apk/debug/*.apk
