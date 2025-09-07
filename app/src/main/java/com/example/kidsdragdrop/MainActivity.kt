@@ -1,10 +1,11 @@
 package com.example.kidsdragdrop
 
+import android.content.ClipData
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.DragEvent
 import android.view.View
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             binding.ivQuestion.visibility = View.GONE
         }
 
-        // Clear options
+        // Clear previous options
         binding.optionsContainer.removeAllViews()
 
         when (q.type) {
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             }
             QuestionType.MULTIPLE_CHOICE_IMAGE -> {
                 q.options.forEachIndexed { index, opt ->
-                    val btn = makeOptionButton("${opt.label}")
+                    val btn = makeOptionButton(opt.label)
                     btn.setOnClickListener { onAnswerSelected(opt.isCorrect, btn) }
                     binding.optionsContainer.addView(btn)
                 }
@@ -89,43 +90,52 @@ class MainActivity : AppCompatActivity() {
                 binding.optionsContainer.addView(falseBtn)
             }
             QuestionType.DRAG_DROP -> {
-                // Create draggable items
-                q.draggableItems.forEach { item ->
-                    val dragView = makeOptionButton(item)
-                    dragView.setOnLongClickListener {
-                        val shadow = View.DragShadowBuilder(dragView)
-                        it.startDragAndDrop(null, shadow, item, 0)
-                        true
-                    }
-                    binding.optionsContainer.addView(dragView)
-                }
-
-                // Create drop target
+                // Drop target
                 val dropTarget = TextView(this).apply {
-                    text = "Drop Here"
-                    textSize = 20f
-                    typeface = Typeface.DEFAULT_BOLD
-                    setBackgroundColor(0xFFBBDEFB.toInt())
-                    setPadding(40)
+                    text = "⬇️ Drop your answer here"
+                    textSize = 22f
+                    setPadding(50)
+                    setBackgroundColor(0xFFE0E0E0.toInt())
                 }
 
-                dropTarget.setOnDragListener { v, event ->
+                dropTarget.setOnDragListener { view, event ->
                     when (event.action) {
-                        android.view.DragEvent.ACTION_DROP -> {
-                            val draggedItem = event.localState as String
-                            val isCorrect = draggedItem == q.correctAnswer
-                            onAnswerSelected(isCorrect, v)
+                        DragEvent.ACTION_DROP -> {
+                            val draggedText = event.clipData.getItemAt(0).text.toString()
+                            if (!answered) {
+                                answered = true
+                                if (draggedText == q.correctAnswer) {
+                                    score++
+                                    (view as TextView).text = "✅ Correct! $draggedText"
+                                    view.setBackgroundColor(getColor(R.color.teal_200))
+                                } else {
+                                    (view as TextView).text = "❌ Wrong! $draggedText"
+                                    view.setBackgroundColor(0xFFFF8A80.toInt())
+                                }
+                            }
+                            true
                         }
+                        else -> true
                     }
-                    true
                 }
 
                 binding.optionsContainer.addView(dropTarget)
+
+                // Draggable items
+                q.draggableItems.forEach { item ->
+                    val dragBtn = makeOptionButton(item)
+                    dragBtn.setOnLongClickListener {
+                        val data = ClipData.newPlainText("label", item)
+                        it.startDragAndDrop(data, View.DragShadowBuilder(it), null, 0)
+                        true
+                    }
+                    binding.optionsContainer.addView(dragBtn)
+                }
             }
         }
     }
 
-    private fun onAnswerSelected(isCorrect: Boolean, selected: View) {
+    private fun onAnswerSelected(isCorrect: Boolean, selected: Button) {
         if (answered) return
         answered = true
         if (isCorrect) {
