@@ -14,6 +14,6 @@ data class Question(
     val imageRes: Int? = null,
     val trueAnswer: Boolean? = null
     // New fields for drag & drop
-    val draggableItems: List<String> = emptyList(),
-    val dropTargets: List<String> = emptyList()
+    val draggableItems: List<String> = emptyList(),   // NEW for drag & drop
+    val correctAnswer: String? = null                 // NEW for drag & drop
 )
