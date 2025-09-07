@@ -11,7 +11,7 @@ object QuestionRepository {
             Question(
                 prompt = "Which of the following matches the figure?",
                 type = QuestionType.DRAG_DROP,
-                imageRes = R.drawable.shape_straight_line,
+                imageRes = R.drawable.shape_line,
                 draggableItems = listOf("Straight line", "Square", "Curved line", "Parabola"),
                 correctAnswer = "Straight line"
             ),
