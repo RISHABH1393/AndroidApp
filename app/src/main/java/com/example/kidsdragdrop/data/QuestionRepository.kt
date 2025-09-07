@@ -4,266 +4,167 @@ import com.example.kidsdragdrop.R
 
 object QuestionRepository {
 
-    fun allQuestions(): List<Question> = listOf(
-        // 1
-        Question(
-            prompt = "How many corners does a square have?",
-            type = QuestionType.MULTIPLE_CHOICE_TEXT,
-            imageRes = R.drawable.shape_square,
-            options = listOf(
-                QuestionOption("2", false),
-                QuestionOption("3", false),
-                QuestionOption("4", true),
-                QuestionOption("5", false)
+    fun allQuestions(): List<Question> {
+        return listOf(
+
+            // ---------- DRAG & DROP (10 questions) ----------
+            Question(
+                prompt = "Which of the following matches the figure?",
+                type = QuestionType.DRAG_DROP,
+                imageRes = R.drawable.shape_straight_line,
+                draggableItems = listOf("Straight line", "Square", "Curved line", "Parabola"),
+                correctAnswer = "Straight line"
+            ),
+            Question(
+                prompt = "Which of the following matches the figure?",
+                type = QuestionType.DRAG_DROP,
+                imageRes = R.drawable.shape_circle,
+                draggableItems = listOf("Ellipse", "Square", "Circle", "Rectangle"),
+                correctAnswer = "Circle"
+            ),
+            Question(
+                prompt = "Which of the following matches the figure?",
+                type = QuestionType.DRAG_DROP,
+                imageRes = R.drawable.shape_triangle,
+                draggableItems = listOf("Triangle", "Circle", "Line", "Oval"),
+                correctAnswer = "Triangle"
+            ),
+            Question(
+                prompt = "Which of the following matches the figure?",
+                type = QuestionType.DRAG_DROP,
+                imageRes = R.drawable.shape_rectangle,
+                draggableItems = listOf("Square", "Rectangle", "Parabola", "Circle"),
+                correctAnswer = "Rectangle"
+            ),
+            Question(
+                prompt = "Which of the following matches the figure?",
+                type = QuestionType.DRAG_DROP,
+                imageRes = R.drawable.shape_square,
+                draggableItems = listOf("Rectangle", "Triangle", "Square", "Line"),
+                correctAnswer = "Square"
+            ),
+            Question(
+                prompt = "Match the figure with the correct name",
+                type = QuestionType.DRAG_DROP,
+                imageRes = R.drawable.shape_oval,
+                draggableItems = listOf("Circle", "Oval", "Square", "Triangle"),
+                correctAnswer = "Oval"
+            ),
+            Question(
+                prompt = "Identify the shape shown",
+                type = QuestionType.DRAG_DROP,
+                imageRes = R.drawable.shape_parabola,
+                draggableItems = listOf("Straight line", "Parabola", "Rectangle", "Triangle"),
+                correctAnswer = "Parabola"
+            ),
+            Question(
+                prompt = "Which of the following matches the figure?",
+                type = QuestionType.DRAG_DROP,
+                imageRes = R.drawable.shape_curved_line,
+                draggableItems = listOf("Curved line", "Straight line", "Square", "Rectangle"),
+                correctAnswer = "Curved line"
+            ),
+            Question(
+                prompt = "Identify this shape",
+                type = QuestionType.DRAG_DROP,
+                imageRes = R.drawable.shape_star,
+                draggableItems = listOf("Star", "Triangle", "Square", "Circle"),
+                correctAnswer = "Star"
+            ),
+            Question(
+                prompt = "Which of the following matches the figure?",
+                type = QuestionType.DRAG_DROP,
+                imageRes = R.drawable.shape_pentagon,
+                draggableItems = listOf("Pentagon", "Hexagon", "Circle", "Square"),
+                correctAnswer = "Pentagon"
+            ),
+
+            // ---------- MULTIPLE CHOICE / TRUE-FALSE (10 questions) ----------
+            Question(
+                prompt = "What is 6 + 7?",
+                type = QuestionType.MULTIPLE_CHOICE_TEXT,
+                options = listOf(
+                    QuestionOption("12", false),
+                    QuestionOption("13", true),
+                    QuestionOption("14", false),
+                    QuestionOption("15", false)
+                )
+            ),
+            Question(
+                prompt = "What is 15 - 8?",
+                type = QuestionType.MULTIPLE_CHOICE_TEXT,
+                options = listOf(
+                    QuestionOption("6", false),
+                    QuestionOption("7", true),
+                    QuestionOption("8", false),
+                    QuestionOption("9", false)
+                )
+            ),
+            Question(
+                prompt = "What is 5 × 3?",
+                type = QuestionType.MULTIPLE_CHOICE_TEXT,
+                options = listOf(
+                    QuestionOption("8", false),
+                    QuestionOption("10", false),
+                    QuestionOption("15", true),
+                    QuestionOption("20", false)
+                )
+            ),
+            Question(
+                prompt = "What is 20 ÷ 4?",
+                type = QuestionType.MULTIPLE_CHOICE_TEXT,
+                options = listOf(
+                    QuestionOption("4", true),
+                    QuestionOption("5", false),
+                    QuestionOption("6", false),
+                    QuestionOption("7", false)
+                )
+            ),
+            Question(
+                prompt = "Is 12 an even number?",
+                type = QuestionType.TRUE_FALSE,
+                trueAnswer = true
+            ),
+            Question(
+                prompt = "Is 19 divisible by 2?",
+                type = QuestionType.TRUE_FALSE,
+                trueAnswer = false
+            ),
+            Question(
+                prompt = "Which shape has 4 equal sides?",
+                type = QuestionType.MULTIPLE_CHOICE_TEXT,
+                options = listOf(
+                    QuestionOption("Triangle", false),
+                    QuestionOption("Rectangle", false),
+                    QuestionOption("Square", true),
+                    QuestionOption("Circle", false)
+                )
+            ),
+            Question(
+                prompt = "How many sides does a hexagon have?",
+                type = QuestionType.MULTIPLE_CHOICE_TEXT,
+                options = listOf(
+                    QuestionOption("5", false),
+                    QuestionOption("6", true),
+                    QuestionOption("7", false),
+                    QuestionOption("8", false)
+                )
+            ),
+            Question(
+                prompt = "Is 50 greater than 100?",
+                type = QuestionType.TRUE_FALSE,
+                trueAnswer = false
+            ),
+            Question(
+                prompt = "What comes after 89?",
+                type = QuestionType.MULTIPLE_CHOICE_TEXT,
+                options = listOf(
+                    QuestionOption("88", false),
+                    QuestionOption("89", false),
+                    QuestionOption("90", true),
+                    QuestionOption("91", false)
+                )
             )
-        ),
-        // 2
-        Question(
-            prompt = "Find the circle. Which letter points to the circle?",
-            type = QuestionType.MULTIPLE_CHOICE_IMAGE,
-            imageRes = R.drawable.shape_collage,
-            options = listOf(
-                QuestionOption("A", false), // square
-                QuestionOption("B", true),  // circle
-                QuestionOption("C", false), // triangle
-                QuestionOption("D", false)
-            )
-        ),
-        // 3
-        Question(
-            prompt = "A triangle has 3 sides.",
-            type = QuestionType.TRUE_FALSE,
-            trueAnswer = true
-        ),
-        // 4
-        Question(
-            prompt = "Which shape has no corners?",
-            type = QuestionType.MULTIPLE_CHOICE_TEXT,
-            options = listOf(
-                QuestionOption("Square", false),
-                QuestionOption("Circle", true),
-                QuestionOption("Triangle", false),
-                QuestionOption("Rectangle", false)
-            )
-        ),
-        // 5
-        Question(
-            prompt = "Find the square. Which letter points to the square?",
-            type = QuestionType.MULTIPLE_CHOICE_IMAGE,
-            imageRes = R.drawable.shape_collage,
-            options = listOf(
-                QuestionOption("A", true),
-                QuestionOption("B", false),
-                QuestionOption("C", false),
-                QuestionOption("D", false)
-            )
-        ),
-        // 6
-        Question(
-            prompt = "A rectangle always has 4 sides.",
-            type = QuestionType.TRUE_FALSE,
-            trueAnswer = true
-        ),
-        // 7
-        Question(
-            prompt = "How many sides does a triangle have?",
-            type = QuestionType.MULTIPLE_CHOICE_TEXT,
-            options = listOf(
-                QuestionOption("2", false),
-                QuestionOption("3", true),
-                QuestionOption("4", false),
-                QuestionOption("5", false)
-            )
-        ),
-        // 8
-        Question(
-            prompt = "Find the triangle. Which letter points to the triangle?",
-            type = QuestionType.MULTIPLE_CHOICE_IMAGE,
-            imageRes = R.drawable.shape_collage,
-            options = listOf(
-                QuestionOption("A", false),
-                QuestionOption("B", false),
-                QuestionOption("C", true),
-                QuestionOption("D", false)
-            )
-        ),
-        // 9
-        Question(
-            prompt = "A circle has straight sides.",
-            type = QuestionType.TRUE_FALSE,
-            trueAnswer = false
-        ),
-        // 10
-        Question(
-            prompt = "Which shape has 4 equal sides?",
-            type = QuestionType.MULTIPLE_CHOICE_TEXT,
-            options = listOf(
-                QuestionOption("Square", true),
-                QuestionOption("Rectangle", false),
-                QuestionOption("Triangle", false),
-                QuestionOption("Oval", false)
-            )
-        ),
-        // 11
-        Question(
-            prompt = "Is the sun shaped like a circle?",
-            type = QuestionType.TRUE_FALSE,
-            trueAnswer = true
-        ),
-        // 12
-        Question(
-            prompt = "Which one is round?",
-            type = QuestionType.MULTIPLE_CHOICE_TEXT,
-            options = listOf(
-                QuestionOption("Circle", true),
-                QuestionOption("Square", false),
-                QuestionOption("Triangle", false),
-                QuestionOption("Rectangle", false)
-            )
-        ),
-        // 13
-        Question(
-            prompt = "A triangle has 4 corners.",
-            type = QuestionType.TRUE_FALSE,
-            trueAnswer = false
-        ),
-        // 14
-        Question(
-            prompt = "How many corners does a triangle have?",
-            type = QuestionType.MULTIPLE_CHOICE_TEXT,
-            options = listOf(
-                QuestionOption("1", false),
-                QuestionOption("2", false),
-                QuestionOption("3", true),
-                QuestionOption("4", false)
-            )
-        ),
-        // 15
-        Question(
-            prompt = "Which shape looks like a box face-on?",
-            type = QuestionType.MULTIPLE_CHOICE_TEXT,
-            options = listOf(
-                QuestionOption("Square", true),
-                QuestionOption("Triangle", false),
-                QuestionOption("Circle", false),
-                QuestionOption("Line", false)
-            )
-        ),
-        // 16
-        Question(
-            prompt = "Is a square also a rectangle? (Hint: all sides equal but still 4 right angles)",
-            type = QuestionType.TRUE_FALSE,
-            trueAnswer = true
-        ),
-        // 17
-        Question(
-            prompt = "Find the shape with 3 corners.",
-            type = QuestionType.MULTIPLE_CHOICE_TEXT,
-            options = listOf(
-                QuestionOption("Triangle", true),
-                QuestionOption("Circle", false),
-                QuestionOption("Square", false),
-                QuestionOption("Rectangle", false)
-            )
-        ),
-        // 18
-        Question(
-            prompt = "Find the shape with 0 corners.",
-            type = QuestionType.MULTIPLE_CHOICE_TEXT,
-            options = listOf(
-                QuestionOption("Circle", true),
-                QuestionOption("Triangle", false),
-                QuestionOption("Square", false),
-                QuestionOption("Rectangle", false)
-            )
-        ),
-        // 19
-        Question(
-            prompt = "A rectangle can have two long sides and two short sides.",
-            type = QuestionType.TRUE_FALSE,
-            trueAnswer = true
-        ),
-        // 20
-        Question(
-            prompt = "Count the sides of this shape.",
-            type = QuestionType.MULTIPLE_CHOICE_IMAGE,
-            imageRes = R.drawable.shape_square,
-            options = listOf(
-                QuestionOption("2", false),
-                QuestionOption("3", false),
-                QuestionOption("4", true),
-                QuestionOption("6", false)
-            )
-        ),
-        // 21
-        Question(
-            prompt = "Drag the circle into the box",
-            type = QuestionType.DRAG_DROP,
-            draggableItems = listOf("Circle", "Square", "Triangle"),
-            correctAnswer = "Circle"
-        ),
-        // 22
-        Question(
-            prompt = "Drag the apple into the basket",
-            type = QuestionType.DRAG_DROP,
-            draggableItems = listOf("Apple", "Banana", "Orange"),
-            correctAnswer = "Apple"
-        ),
-        // 23
-        Question(
-            prompt = "Drag the number 5",
-            type = QuestionType.DRAG_DROP,
-            draggableItems = listOf("3", "5", "7"),
-            correctAnswer = "5"
-        ),
-        // 24
-        Question(
-            prompt = "Drag the red color",
-            type = QuestionType.DRAG_DROP,
-            draggableItems = listOf("Red", "Blue", "Green"),
-            correctAnswer = "Red"
-        ),
-        // 25
-        Question(
-            prompt = "Drag the biggest animal",
-            type = QuestionType.DRAG_DROP,
-            draggableItems = listOf("Cat", "Dog", "Elephant"),
-            correctAnswer = "Elephant"
-        ),
-        // 26
-        Question(
-            prompt = "Drag the triangle shape",
-            type = QuestionType.DRAG_DROP,
-            draggableItems = listOf("Circle", "Triangle", "Square"),
-            correctAnswer = "Triangle"
-        ),
-        // 27
-        Question(
-            prompt = "Drag the letter A",
-            type = QuestionType.DRAG_DROP,
-            draggableItems = listOf("A", "B", "C"),
-            correctAnswer = "A"
-        ),
-        // 28
-        Question(
-            prompt = "Drag the fruit",
-            type = QuestionType.DRAG_DROP,
-            draggableItems = listOf("Car", "Ball", "Mango"),
-            correctAnswer = "Mango"
-        ),
-        // 29
-        Question(
-            prompt = "Drag the number that comes after 2",
-            type = QuestionType.DRAG_DROP,
-            draggableItems = listOf("1", "3", "5"),
-            correctAnswer = "3"
-        ),
-        // 30
-        Question(
-            prompt = "Drag the object used to write",
-            type = QuestionType.DRAG_DROP,
-            draggableItems = listOf("Pen", "Spoon", "Cup"),
-            correctAnswer = "Pen"
         )
-    )
+    }
 }
