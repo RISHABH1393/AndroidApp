@@ -100,8 +100,8 @@ object QuestionRepository {
                 prompt = "What is 20 ÷ 4?",
                 type = QuestionType.MULTIPLE_CHOICE_TEXT,
                 options = listOf(
-                    QuestionOption("4", true),
-                    QuestionOption("5", false),
+                    QuestionOption("4", false),
+                    QuestionOption("5", true),
                     QuestionOption("6", false),
                     QuestionOption("7", false)
                 )
