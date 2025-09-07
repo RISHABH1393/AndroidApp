@@ -44,25 +44,11 @@ object QuestionRepository {
                 correctAnswer = "Square"
             ),
             Question(
-                prompt = "Match the figure with the correct name",
-                type = QuestionType.DRAG_DROP,
-                imageRes = R.drawable.shape_oval,
-                draggableItems = listOf("Circle", "Oval", "Square", "Triangle"),
-                correctAnswer = "Oval"
-            ),
-            Question(
-                prompt = "Identify the shape shown",
-                type = QuestionType.DRAG_DROP,
-                imageRes = R.drawable.shape_parabola,
-                draggableItems = listOf("Straight line", "Parabola", "Rectangle", "Triangle"),
-                correctAnswer = "Parabola"
-            ),
-            Question(
                 prompt = "Which of the following matches the figure?",
                 type = QuestionType.DRAG_DROP,
-                imageRes = R.drawable.shape_curved_line,
-                draggableItems = listOf("Curved line", "Straight line", "Square", "Rectangle"),
-                correctAnswer = "Curved line"
+                imageRes = R.drawable.shape_rhombus,
+                draggableItems = listOf("Rhombus", "Straight line", "Square", "Rectangle"),
+                correctAnswer = "Rhombus"
             ),
             Question(
                 prompt = "Identify this shape",
