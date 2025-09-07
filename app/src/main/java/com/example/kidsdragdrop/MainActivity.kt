@@ -88,10 +88,44 @@ class MainActivity : AppCompatActivity() {
                 binding.optionsContainer.addView(trueBtn)
                 binding.optionsContainer.addView(falseBtn)
             }
+            QuestionType.DRAG_DROP -> {
+                // Create draggable items
+                q.draggableItems.forEach { item ->
+                    val dragView = makeOptionButton(item)
+                    dragView.setOnLongClickListener {
+                        val shadow = View.DragShadowBuilder(dragView)
+                        it.startDragAndDrop(null, shadow, item, 0)
+                        true
+                    }
+                    binding.optionsContainer.addView(dragView)
+                }
+
+                // Create drop target
+                val dropTarget = TextView(this).apply {
+                    text = "Drop Here"
+                    textSize = 20f
+                    typeface = Typeface.DEFAULT_BOLD
+                    setBackgroundColor(0xFFBBDEFB.toInt())
+                    setPadding(40)
+                }
+
+                dropTarget.setOnDragListener { v, event ->
+                    when (event.action) {
+                        android.view.DragEvent.ACTION_DROP -> {
+                            val draggedItem = event.localState as String
+                            val isCorrect = draggedItem == q.correctAnswer
+                            onAnswerSelected(isCorrect, v)
+                        }
+                    }
+                    true
+                }
+
+                binding.optionsContainer.addView(dropTarget)
+            }
         }
     }
 
-    private fun onAnswerSelected(isCorrect: Boolean, selected: Button) {
+    private fun onAnswerSelected(isCorrect: Boolean, selected: View) {
         if (answered) return
         answered = true
         if (isCorrect) {
