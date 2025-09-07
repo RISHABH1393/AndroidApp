@@ -194,8 +194,7 @@ object QuestionRepository {
                 QuestionOption("4", true),
                 QuestionOption("6", false)
             )
-        )
-                // --- new drag & drop questions ---
+        ),
         // 21
         Question(
             prompt = "Drag the circle into the box",
