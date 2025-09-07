@@ -1,0 +1,15 @@
+workflows:
+  build-android-app:
+    name: Build KidsDragDropMath
+    max_build_duration: 30
+    environment:
+      java: 11
+    scripts:
+      - name: Generate Gradle wrapper
+        script: gradle wrapper
+      - name: Fix Gradle wrapper permissions
+        script: chmod +x ./gradlew
+      - name: Build Debug APK
+        script: ./gradlew assembleDebug --stacktrace --no-daemon
+    artifacts:
+      - app/build/outputs/apk/debug/*.apk

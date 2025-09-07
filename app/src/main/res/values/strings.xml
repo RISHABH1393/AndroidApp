@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">KidsDragDropMath</string>
-    <string name="question_image">Question image</string>
+    <string name="app_name">Kids Quiz</string>
+    <string name="start">Start</string>
+    <string name="next">Next</string>
+    <string name="true_text">True</string>
+    <string name="false_text">False</string>
+    <string name="try_again">Try Again</string>
 </resources>
