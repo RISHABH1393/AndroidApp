@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace "com.example.kidsdragdrop"
     compileSdk 33
 
     defaultConfig {
