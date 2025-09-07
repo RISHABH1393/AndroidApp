@@ -28,8 +28,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.btnNext.isEnabled = false
         setContentView(binding.root)
-
+        
         startNewSession()
 
         binding.btnNext.setOnClickListener {
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startNewSession() {
         val all = QuestionRepository.allQuestions().shuffled(Random(System.currentTimeMillis()))
-        sessionQuestions = all.take(5).toMutableList()
+        sessionQuestions = all.take(10).toMutableList()
         currentIndex = 0
         score = 0
         showQuestion()
@@ -112,6 +113,7 @@ class MainActivity : AppCompatActivity() {
                             val draggedText = event.clipData.getItemAt(0).text.toString()
                             if (!answered) {
                                 answered = true
+                                binding.btnNext.isEnabled = true
                                 if (draggedText == q.correctAnswer) {
                                     score++
                                     (view as TextView).text = "✅ Correct! $draggedText"
@@ -141,11 +143,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.btnNext.isEnabled = false
     }
 
     private fun onAnswerSelected(isCorrect: Boolean, selected: Button) {
         if (answered) return
         answered = true
+        binding.btnNext.isEnabled = true
         if (isCorrect) {
             score++
             selected.setBackgroundColor(getColor(R.color.teal_200))
