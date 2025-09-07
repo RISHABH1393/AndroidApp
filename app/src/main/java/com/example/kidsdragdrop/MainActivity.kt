@@ -90,9 +90,17 @@ class MainActivity : AppCompatActivity() {
                 binding.optionsContainer.addView(falseBtn)
             }
             QuestionType.DRAG_DROP -> {
+                // Ensure the shape image is shown
+                if (q.imageRes != null) {
+                    binding.ivQuestion.setImageResource(q.imageRes)
+                    binding.ivQuestion.visibility = View.VISIBLE
+                } else {
+                    binding.ivQuestion.visibility = View.GONE
+                }
+
                 // Drop target
                 val dropTarget = TextView(this).apply {
-                    text = "⬇️ Drop your answer here"
+                    text = "⬇️ Drag the correct answer here"
                     textSize = 22f
                     setPadding(50)
                     setBackgroundColor(0xFFE0E0E0.toInt())
