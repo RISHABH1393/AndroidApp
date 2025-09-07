@@ -195,5 +195,76 @@ object QuestionRepository {
                 QuestionOption("6", false)
             )
         )
+                // --- new drag & drop questions ---
+        // 21
+        Question(
+            prompt = "Drag the circle into the box",
+            type = QuestionType.DRAG_DROP,
+            draggableItems = listOf("Circle", "Square", "Triangle"),
+            correctAnswer = "Circle"
+        ),
+        // 22
+        Question(
+            prompt = "Drag the apple into the basket",
+            type = QuestionType.DRAG_DROP,
+            draggableItems = listOf("Apple", "Banana", "Orange"),
+            correctAnswer = "Apple"
+        ),
+        // 23
+        Question(
+            prompt = "Drag the number 5",
+            type = QuestionType.DRAG_DROP,
+            draggableItems = listOf("3", "5", "7"),
+            correctAnswer = "5"
+        ),
+        // 24
+        Question(
+            prompt = "Drag the red color",
+            type = QuestionType.DRAG_DROP,
+            draggableItems = listOf("Red", "Blue", "Green"),
+            correctAnswer = "Red"
+        ),
+        // 25
+        Question(
+            prompt = "Drag the biggest animal",
+            type = QuestionType.DRAG_DROP,
+            draggableItems = listOf("Cat", "Dog", "Elephant"),
+            correctAnswer = "Elephant"
+        ),
+        // 26
+        Question(
+            prompt = "Drag the triangle shape",
+            type = QuestionType.DRAG_DROP,
+            draggableItems = listOf("Circle", "Triangle", "Square"),
+            correctAnswer = "Triangle"
+        ),
+        // 27
+        Question(
+            prompt = "Drag the letter A",
+            type = QuestionType.DRAG_DROP,
+            draggableItems = listOf("A", "B", "C"),
+            correctAnswer = "A"
+        ),
+        // 28
+        Question(
+            prompt = "Drag the fruit",
+            type = QuestionType.DRAG_DROP,
+            draggableItems = listOf("Car", "Ball", "Mango"),
+            correctAnswer = "Mango"
+        ),
+        // 29
+        Question(
+            prompt = "Drag the number that comes after 2",
+            type = QuestionType.DRAG_DROP,
+            draggableItems = listOf("1", "3", "5"),
+            correctAnswer = "3"
+        ),
+        // 30
+        Question(
+            prompt = "Drag the object used to write",
+            type = QuestionType.DRAG_DROP,
+            draggableItems = listOf("Pen", "Spoon", "Cup"),
+            correctAnswer = "Pen"
+        )
     )
 }
