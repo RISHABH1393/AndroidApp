@@ -163,18 +163,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showResult() {
-        setContentView(R.layout.fragment_result)
-        val tvScore: TextView = findViewById(R.id.tvScore)
-        val btnRestart: Button = findViewById(R.id.btnRestart)
-        tvScore.text = "You scored $score out of ${sessionQuestions.size}!"
-        btnRestart.setOnClickListener {
-            binding = ActivityMainBinding.inflate(layoutInflater)
-            setContentView(binding.root)
-            startNewSession()
-            binding.btnNext.text = getString(R.string.next)
+private fun showResult() {
+    setContentView(R.layout.fragment_result)
+    val tvScore: TextView = findViewById(R.id.tvScore)
+    val btnRestart: Button = findViewById(R.id.btnRestart)
+    tvScore.text = "You scored $score out of ${sessionQuestions.size}!"
+    btnRestart.setOnClickListener {
+        // Re-inflate binding and reset layout
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Re-attach the NEXT button listener 👇
+        binding.btnNext.setOnClickListener {
+            if (currentIndex < sessionQuestions.size - 1) {
+                currentIndex++
+                showQuestion()
+            } else {
+                showResult()
+            }
         }
+
+        startNewSession()
+        binding.btnNext.text = getString(R.string.next)
     }
+}
+
 
     private fun makeOptionButton(text: String): Button {
         val btn = Button(this)
