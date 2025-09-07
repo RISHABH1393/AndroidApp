@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.setPadding
 import com.example.kidsdragdrop.data.Question
-import com.example.kidsdragdrop.data.QuestionOption
 import com.example.kidsdragdrop.data.QuestionRepository
 import com.example.kidsdragdrop.data.QuestionType
 import com.example.kidsdragdrop.databinding.ActivityMainBinding
@@ -28,9 +27,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.btnNext.isEnabled = false
         setContentView(binding.root)
-        
+
         startNewSession()
 
         binding.btnNext.setOnClickListener {
@@ -51,93 +49,107 @@ class MainActivity : AppCompatActivity() {
         showQuestion()
     }
 
-private fun showQuestion() {
-    val q = sessionQuestions[currentIndex]
-    answered = false
+    private fun showQuestion() {
+        val q = sessionQuestions[currentIndex]
+        answered = false
+        binding.btnNext.isEnabled = false
 
-    // reset next button at the start
-    binding.btnNext.isEnabled = false  
+        binding.tvQuestion.text = "Q${currentIndex + 1}. ${q.prompt}"
 
-    binding.tvQuestion.text = "Q${currentIndex + 1}. ${q.prompt}"
-
-    // Image handling
-    if (q.imageRes != null) {
-        binding.ivQuestion.setImageResource(q.imageRes)
-        binding.ivQuestion.visibility = View.VISIBLE
-    } else {
-        binding.ivQuestion.visibility = View.GONE
-    }
-
-    // Clear previous options
-    binding.optionsContainer.removeAllViews()
-
-    when (q.type) {
-        QuestionType.MULTIPLE_CHOICE_TEXT -> {
-            q.options.forEachIndexed { index, opt ->
-                val btn = makeOptionButton("${'A' + index}. ${opt.label}")
-                btn.setOnClickListener { onAnswerSelected(opt.isCorrect, btn) }
-                binding.optionsContainer.addView(btn)
-            }
+        // Image if present
+        if (q.imageRes != null) {
+            binding.ivQuestion.setImageResource(q.imageRes)
+            binding.ivQuestion.visibility = View.VISIBLE
+        } else {
+            binding.ivQuestion.visibility = View.GONE
         }
-        QuestionType.MULTIPLE_CHOICE_IMAGE -> {
-            q.options.forEachIndexed { index, opt ->
-                val btn = makeOptionButton(opt.label)
-                btn.setOnClickListener { onAnswerSelected(opt.isCorrect, btn) }
-                binding.optionsContainer.addView(btn)
-            }
-        }
-        QuestionType.TRUE_FALSE -> {
-            val trueBtn = makeOptionButton(getString(R.string.true_text))
-            val falseBtn = makeOptionButton(getString(R.string.false_text))
-            trueBtn.setOnClickListener { onAnswerSelected(q.trueAnswer == true, trueBtn) }
-            falseBtn.setOnClickListener { onAnswerSelected(q.trueAnswer == false, falseBtn) }
-            binding.optionsContainer.addView(trueBtn)
-            binding.optionsContainer.addView(falseBtn)
-        }
-        QuestionType.DRAG_DROP -> {
-            val dropTarget = TextView(this).apply {
-                text = "⬇️ Drag the correct answer here"
-                textSize = 22f
-                setPadding(50)
-                setBackgroundColor(0xFFE0E0E0.toInt())
-            }
 
-            dropTarget.setOnDragListener { view, event ->
-                when (event.action) {
-                    DragEvent.ACTION_DROP -> {
-                        val draggedText = event.clipData.getItemAt(0).text.toString()
-                        if (!answered) {
-                            answered = true
-                            binding.btnNext.isEnabled = true  // ✅ works now
-                            if (draggedText == q.correctAnswer) {
-                                score++
-                                (view as TextView).text = "✅ Correct! $draggedText"
-                                view.setBackgroundColor(getColor(R.color.teal_200))
-                            } else {
-                                (view as TextView).text = "❌ Wrong! $draggedText"
-                                view.setBackgroundColor(0xFFFF8A80.toInt())
-                            }
+        // Clear old options
+        binding.optionsContainer.removeAllViews()
+
+        when (q.type) {
+            QuestionType.MULTIPLE_CHOICE_TEXT -> {
+                q.options.forEachIndexed { index, opt ->
+                    val btn = makeOptionButton("${'A' + index}. ${opt.label}")
+                    btn.setOnClickListener { onAnswerSelected(opt.isCorrect, btn) }
+                    binding.optionsContainer.addView(btn)
+                }
+            }
+            QuestionType.MULTIPLE_CHOICE_IMAGE -> {
+                q.options.forEach { opt ->
+                    val btn = makeOptionButton(opt.label)
+                    btn.setOnClickListener { onAnswerSelected(opt.isCorrect, btn) }
+                    binding.optionsContainer.addView(btn)
+                }
+            }
+            QuestionType.TRUE_FALSE -> {
+                val trueBtn = makeOptionButton(getString(R.string.true_text))
+                val falseBtn = makeOptionButton(getString(R.string.false_text))
+                trueBtn.setOnClickListener { onAnswerSelected(q.trueAnswer == true, trueBtn) }
+                falseBtn.setOnClickListener { onAnswerSelected(q.trueAnswer == false, falseBtn) }
+                binding.optionsContainer.addView(trueBtn)
+                binding.optionsContainer.addView(falseBtn)
+            }
+            QuestionType.DRAG_DROP -> {
+                val dropTarget = TextView(this).apply {
+                    text = "⬇️ Drag the correct answer here"
+                    textSize = 22f
+                    setPadding(50)
+                    setBackgroundColor(0xFFE0E0E0.toInt())
+                }
+
+                dropTarget.setOnDragListener { view, event ->
+                    when (event.action) {
+                        DragEvent.ACTION_DRAG_STARTED -> {
+                            true
                         }
+                        DragEvent.ACTION_DRAG_ENTERED -> {
+                            view.setBackgroundColor(0xFFBBDEFB.toInt()) // light blue
+                            true
+                        }
+                        DragEvent.ACTION_DRAG_EXITED -> {
+                            view.setBackgroundColor(0xFFE0E0E0.toInt()) // reset
+                            true
+                        }
+                        DragEvent.ACTION_DROP -> {
+                            val draggedText = event.clipData.getItemAt(0).text.toString()
+                            if (!answered) {
+                                answered = true
+                                binding.btnNext.isEnabled = true
+                                if (draggedText == q.correctAnswer) {
+                                    score++
+                                    (view as TextView).text = "✅ Correct! $draggedText"
+                                    view.setBackgroundColor(getColor(R.color.teal_200))
+                                } else {
+                                    (view as TextView).text = "❌ Wrong! $draggedText"
+                                    view.setBackgroundColor(0xFFFF8A80.toInt())
+                                }
+                            }
+                            true
+                        }
+                        DragEvent.ACTION_DRAG_ENDED -> {
+                            view.setBackgroundColor(0xFFE0E0E0.toInt())
+                            true
+                        }
+                        else -> false
+                    }
+                }
+
+                binding.optionsContainer.addView(dropTarget)
+
+                // Draggable options
+                q.draggableItems.forEach { item ->
+                    val dragBtn = makeOptionButton(item)
+                    dragBtn.setOnLongClickListener {
+                        val data = ClipData.newPlainText("label", item)
+                        it.startDragAndDrop(data, View.DragShadowBuilder(it), null, 0)
                         true
                     }
-                    else -> true
+                    binding.optionsContainer.addView(dragBtn)
                 }
-            }
-
-            binding.optionsContainer.addView(dropTarget)
-
-            q.draggableItems.forEach { item ->
-                val dragBtn = makeOptionButton(item)
-                dragBtn.setOnLongClickListener {
-                    val data = ClipData.newPlainText("label", item)
-                    it.startDragAndDrop(data, View.DragShadowBuilder(it), null, 0)
-                    true
-                }
-                binding.optionsContainer.addView(dragBtn)
             }
         }
     }
-}
 
     private fun onAnswerSelected(isCorrect: Boolean, selected: Button) {
         if (answered) return
